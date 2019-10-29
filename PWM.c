@@ -1,7 +1,6 @@
 /*
  * MPLAB X IDE
  * Author: Nazim BL
- * Bcuk Boost Converter Application
  * Created on 5 juillet 2018, 10:54
  */
 
@@ -13,30 +12,16 @@ _FOSCSEL(FNOSC_FRC & IESO_OFF & PWMLOCK_OFF);
 _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF & POSCMD_NONE);
 
 #define FCY 40535000
-#define LED	LATAbits.LATA0
 
 void SetupOSC();
-int ADC_Read();
-void ADC_Setup();
-void PWM_Init(int p1,int p2);
-void PWM_Update(int pwm1,int pwm2);
-void PWM_Sync(float d);
-
-float d=1;
-int p1=100,p2=100;
-
+void PWM_Init();
 
 int main(void) {
     
     SetupOSC();
-    ADC_Setup();
-    PWM_Init(200,200);
-    LED=1;
-    
-    while (1){      
-    d=(float)ADCRead()/4095;
-    PWM_Sync(d);
-    }    
+    PWM_Init();
+     
+    while (1);
     return 0;
 }
 
@@ -84,29 +69,4 @@ vvoid PWM_Init()
     PDC3 = 19999; // PWM#3 Duty Cycle register (11-bit)
  
     PTCONbits.PTEN = 1; // Enable PWM Timerbase!
-}
-
-int ADC_Read(){
-		
-AD1CON1bits.SAMP = 1;
-while (!AD1CON1bits.DONE);// conversion done?
-return ADC1BUF0;    
-}
-
-//read each 5khz
-void ADC_Setup(){
-
- TRISBbits.TRISB0=1; 
- ANSELB=0x0001;
- ANSELBbits.ANSB0=1;
- //10 bit //AD1CON1 = 0x00E0; 
- //12 bit
- AD1CON1 = 0x04E0; 
- 
- AD1CHS0= 0x0002; // Connect RA0/AN0 as CH0 input ..
- 
- AD1CSSL = 0;
- AD1CON3 = 0x1F02; // Tsampling = 2 Tad
- AD1CON2 = 0;
- AD1CON1bits.ADON = 1; // turn ADC ON 
 }
