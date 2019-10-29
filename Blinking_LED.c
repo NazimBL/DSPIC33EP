@@ -1,12 +1,10 @@
 /*
- * File:   main.c
- * Author: DELL
- *
+ * MPLAB X IDE
+ * Author: Nazim BL
  * Created on 5 juillet 2018, 10:54
  */
 
 #include "xc.h"
-
 // Select Internal FRC at POR
 _FOSCSEL(FNOSC_FRC & IESO_OFF & PWMLOCK_OFF);
 // Enable Clock Switching and Configure Primary Oscillator in XT mode
@@ -27,18 +25,16 @@ IFS0bits.T3IF = 0; // Clear Timer3 Interrupt Flag
 //LED=!LED;
  
 }
-int main(void) {
+void main(void) {
     
     SetupOSC();
     Timer_Setup();
     LED=1;
    
-	while (1)
-	{  
+    while (1){  
     LED=!LED  
     myDelay();
-	}    
-    return 0;
+    }    
 }
 
 void SetupOSC(){
