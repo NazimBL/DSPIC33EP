@@ -1,6 +1,6 @@
 /*
- * File:   main.c
- * Author: DELL
+ * MPLAB X IDE
+ * Author: Nazim BL
  * Bcuk Boost Converter Application
  * Created on 5 juillet 2018, 10:54
  */
@@ -29,16 +29,14 @@ int p1=100,p2=100;
 int main(void) {
     
     SetupOSC();
-	ADC_Setup();
+    ADC_Setup();
     PWM_Init(200,200);
-	
     LED=1;
-   
-	while (1)
-	{      
-	d=(float)ADCRead()/4095;
+    
+    while (1){      
+    d=(float)ADCRead()/4095;
     PWM_Sync(d);
-	}    
+    }    
     return 0;
 }
 
@@ -80,8 +78,7 @@ vvoid PWM_Init()
  
     DTCON1bits.DTAPS = 0;  //DeadTime pre-scaler
     DTCON1bits.DTA = 59;   //DeadTime value for 4 us. 
- 
-
+	
     PDC1 = 19999; // PWM#1 Duty Cycle register (11-bit)
     PDC2 = 19999; // PWM#2 Duty Cycle register (11-bit)
     PDC3 = 19999; // PWM#3 Duty Cycle register (11-bit)
@@ -91,9 +88,9 @@ vvoid PWM_Init()
 
 int ADC_Read(){
 		
-		AD1CON1bits.SAMP = 1;
-		while (!AD1CON1bits.DONE);// conversion done?
-		return ADC1BUF0;    
+AD1CON1bits.SAMP = 1;
+while (!AD1CON1bits.DONE);// conversion done?
+return ADC1BUF0;    
 }
 
 //read each 5khz
@@ -102,8 +99,7 @@ void ADC_Setup(){
  TRISBbits.TRISB0=1; 
  ANSELB=0x0001;
  ANSELBbits.ANSB0=1;
- //10 bit
- //AD1CON1 = 0x00E0; 
+ //10 bit //AD1CON1 = 0x00E0; 
  //12 bit
  AD1CON1 = 0x04E0; 
  
