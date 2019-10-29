@@ -1,7 +1,6 @@
 /*
- * File:   main.c
+ * MPLAB X IDE
  * Author: Nazim BL
- *
  * Created on 5 juillet 2018, 10:54
  */
 
@@ -29,11 +28,9 @@ int main(void) {
     
     SetupOSC();
     Timer_Setup();
-	
-	TRISAbits.TRISA0=0;     
+    TRISAbits.TRISA0=0;     
     LED=0;
-	
-	while (1);
+    while (1);
 }
  
 void SetupOSC(){
