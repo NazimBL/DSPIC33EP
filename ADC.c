@@ -1,7 +1,6 @@
 /*
- * File:   main.c
+ * MPLAB X IDE
  * Author: Nazim BL
- *
  * Created on 5 juillet 2018, 10:54
  */
 
@@ -16,25 +15,25 @@ _FOSC(FCKSM_CSECMD & OSCIOFNC_OFF & POSCMD_NONE);
 #define LED	LATAbits.LATA0
 
 void SetupOSC();
-int ADCValue=0;
 void ADC_Read();
 void ADC_Setup();
 void myDelay();
 
-int main(void) {
+int ADCValue=0;
+
+void main(void) {
     
     SetupOSC();
     ADC_Setup();
 	
-	TRISAbits.TRISA0=0;     
+    TRISAbits.TRISA0=0;     
     LED=0
       
-	while (1) // repeat continuously
-	{  
+    while (1){
+	    
     ADC_Read();
     myDelay();   
-	}   
-    return 0;
+    }   
 }
  
 void SetupOSC(){
@@ -66,13 +65,10 @@ void ADC_Setup(){
  TRISBbits.TRISB0=1; 
  ANSELB=0x0001;
  ANSELBbits.ANSB0=1;
- //10 bit
- //AD1CON1 = 0x00E0; 
+ //10 bit //AD1CON1 = 0x00E0; 
  //12 bit
  AD1CON1 = 0x04E0; 
- 
  AD1CHS0= 0x0002; // Connect RA0/AN0 as CH0 input ..
- 
  AD1CSSL = 0;
  AD1CON3 = 0x1F02; // Tsampling = 2 Tad
  AD1CON2 = 0;
