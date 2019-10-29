@@ -1,6 +1,6 @@
 /*
- * File:   main.c
- * Author: DELL
+ * MPLAB X IDE
+ * Author: Nazim BL
  * Bcuk Boost Converter Application
  * Created on 5 juillet 2018, 10:54
  */
@@ -25,20 +25,17 @@ void PWM_Sync(float d);
 float d=1;
 int p1=100,p2=100;
 
-
 int main(void) {
     
     SetupOSC();
-	ADC_Setup();
-    PWM_Init(200,200);
-	
+    ADC_Setup();
+    PWM_Init(200,200);	
     LED=1;
-   
-	while (1)
-	{      
-	d=(float)ADCRead()/4095;
+
+    while (1){      
+    d=(float)ADCRead()/4095;
     PWM_Sync(d);
-	}    
+    }    
     return 0;
 }
 
@@ -57,31 +54,27 @@ while (OSCCONbits.LOCK!= 1);
 
 void PWM_Sync(float d){
 	
-	
     d=d*2;
     if(d>=1){
-        d=d-1;
-        if((d*800)<600)PWM_Update((int)(d*800),800);
-        else PWM_Update(600,800);   
+     d=d-1;
+     if((d*800)<600)PWM_Update((int)(d*800),800);
+     else PWM_Update(600,800);   
     }
-	else 
-    {
-        PWM_Update(0,(int)(d*800));
-    }
+    else PWM_Update(0,(int)(d*800));  
 }
 
 void PWM_Update(int pwm1,int pwm2){
   
 PDC1 = pwm2;
 PDC2 = pwm1;
-
 }
+
 void PWM_Init(int p1,int p2)
 {
-    TRISBbits.TRISB12=0;
-    TRISBbits.TRISB14=0;
-    // RB14 and Rb12
-   /* Set PWM Period on Primary Time Base */
+TRISBbits.TRISB12=0;
+TRISBbits.TRISB14=0;
+// RB14 and Rb12
+/* Set PWM Period on Primary Time Base */
 PTPER = 800;
 //PHASE1 = 500;
 /* Set Duty Cycles */
@@ -104,9 +97,9 @@ PTCONbits.EIPU = 1;
 
 int ADC_Read(){
 		
-		AD1CON1bits.SAMP = 1;
-		while (!AD1CON1bits.DONE);// conversion done?
-		return ADC1BUF0;    
+AD1CON1bits.SAMP = 1;
+while (!AD1CON1bits.DONE); // conversion done?
+return ADC1BUF0;    
 }
 
 //read each 5khz
@@ -115,8 +108,7 @@ void ADC_Setup(){
  TRISBbits.TRISB0=1; 
  ANSELB=0x0001;
  ANSELBbits.ANSB0=1;
- //10 bit
- //AD1CON1 = 0x00E0; 
+ //10 bit //AD1CON1 = 0x00E0; 
  //12 bit
  AD1CON1 = 0x04E0; 
  
